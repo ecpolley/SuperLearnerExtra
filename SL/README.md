@@ -14,6 +14,10 @@ Creates additional `knn` wrappers with different values for the `k` parameter. T
 
 Creates additional `nnet` wrappers with different values for the `size` parameter. These new wrappers will be located in the global environment after running the function. The default size for `SL.nnet` is 2. With this function, the argument `size` is a numeric vector and a new `SL.nnet.*` function will be created for each element of the vector.
 
+## `create.SL.glmnet.R` ##
+
+Creates additional `glmnet` wrappers with different values for the `alpha` parameter. These new wrappers will be located in the global environment after running the function. The default alpha for `SL.glmnet` is 1. With this function, the argument `alpha` is a numeric vector and a new `SL.alpha.*` function will be created for each element of the vector. `alpha` varies between 0 and 1.
+
 ## `write.SL.template.R` ##
 
 This function can be used to generate a new file with the template `SL.*` information. The only argument is to specify a connection (usually a file location) for the output. Any additional arguments will be passed to `cat` within the function. For example, you might want to add `append = TRUE` if adding to an existing file.
