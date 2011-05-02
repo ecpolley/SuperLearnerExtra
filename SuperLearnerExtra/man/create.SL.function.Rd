@@ -16,7 +16,7 @@ create.SL.glmnet(alpha = c(.25, .50, .75))
 create.SL.knn(k = c(20, 30, 40, 50))
 create.SL.nnet(size = c(3, 4))
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{deg.gam}{
 Degree parameter for \code{gam}
