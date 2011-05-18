@@ -4,6 +4,7 @@
 \alias{create.SL.knn}
 \alias{create.SL.nnet}
 \alias{create.SL.loess}
+\alias{create.SL.randomForest}
 
 \title{
 Create additional SL wrappers
@@ -17,6 +18,7 @@ create.SL.glmnet(alpha = c(.25, .50, .75))
 create.SL.knn(k = c(20, 30, 40, 50))
 create.SL.nnet(size = c(3, 4))
 create.SL.loess(span = c(0.25, 0.50))
+create.SL.randomForest(tune = list(mtry = c(1, 5, 10), nodesize = c(1, 5, 10)))
 }
 
 \arguments{
@@ -49,6 +51,7 @@ create.SL.glmnet()
 create.SL.knn()
 create.SL.nnet()
 create.SL.loess()
+create.SL.randomForest()
 }
 
 \keyword{utilities}
