@@ -1,6 +1,6 @@
 SL.leekasso <- function (Y, X, newX, family, obsWeights, id, ...) 
 {
-	.SL.require("sva") # Bioconductor package, but really only "need" the f.pvalue function, might just copy it over?
+	.SL.require("sva") # Bioconductor package, but really only need the f.pvalue function, might just replace it with internal function?
 	N <- length(Y)
 	mod <- cbind(rep.int(1, N), Y)
   mod0 <- cbind(rep.int(1, N))
@@ -18,7 +18,7 @@ SL.leekasso <- function (Y, X, newX, family, obsWeights, id, ...)
 
 
 ## 
-
+## f.pvalue function from sva package:
 # f.pvalue <- function (dat, mod, mod0) 
 # {
 #     n <- dim(dat)[2]
