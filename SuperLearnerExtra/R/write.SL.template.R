@@ -1,3 +1,0 @@
-write.SL.template <- function(file = '', ...) {
-  cat('SL.template <- function(Y, X, newX, family, obsWeights, id, ...) {\n  # load required packages\n  # require(\'pkg\')\n  if(family$family == \'gaussian\') {\n  \n  }\n  if(family$family == \'binomial\') {\n  \n  }\n  # pred is the predicted responses for newX (on the scale of the outcome)\n  pred <- numeric()\n  # fit returns all objects needed for predict.SL.template\n  fit <- list(object = )\n  # declare class of fit for predict.SL.template\n  class(fit) <- \'SL.template\'\n  # return a list with pred and fit\n  out <- list(pred = pred, fit = fit)\n  return(out)\n}', file = file, ...)
-}
