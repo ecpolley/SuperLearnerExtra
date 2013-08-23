@@ -17,11 +17,13 @@ Journal of Computational and Graphical Statistics,
 ### `SL.flasso`
 FPC-based LASSO model using `cv.glmnet()`  in package `glmnet`.
 
+<!-- 
 ### `SL.flirti`
 Wraps the code supplied with 
 
 Gareth M. James, Jing Wang, Ji Zhu (2009).
 [*Functional linear regression that's interpretable*](http://arxiv.org/abs/0908.2918).
+-->
 
 ### `SL.flm`
 Spline-based functional linear model with locally adaptive penalty and REML based smoothing
