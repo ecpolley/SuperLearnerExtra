@@ -5,7 +5,7 @@ outcomes on a functional covariate to be used with `SuperLearner` package.
 This file contains a short description of each function.  Note that the supplied wrappers do 
 not define `predict` methods. 
 More detailed descriptions of the methods defined here and experiments on some benchmark data sets
-can be found in  Jeff Goldsmith, Fabian Scheipl (2013): “Estimator Selection and Combination in Scalar-on-Function Regression”
+can be found in  Jeff Goldsmith, Fabian Scheipl (2013): [*Estimator Selection and Combination in Scalar-on-Function Regression*](http://dx.doi.org/10.1016/j.csda.2013.10.009)
 
 ### `SL.fgam`
 Functional generalized additive model as implemented in the `fgam()` function in the `refund` package.
