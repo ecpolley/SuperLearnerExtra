@@ -26,6 +26,10 @@ Creates additional `randomForest` wrappers changing both `mtry` and `nodesize`.
 
 This function can be used to generate a new file with the template `SL.*` information. The only argument is to specify a connection (usually a file location) for the output. Any additional arguments will be passed to `cat` within the function. For example, you might want to add `append = TRUE` if adding to an existing file.
 
+## `SL.bart` ##
+
+This function implements the `bart` function from the `BayesTree` package (no longer on CRAN)
+
 ## `SL.blackboost` ##
 
 This function implements the `blackboost` function from the `mboost` package.
