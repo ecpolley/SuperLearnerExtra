@@ -1,0 +1,24 @@
+## SL.gbm wrapper using OOB instead of cross-validation
+SL.gbmOOB <- function(Y, X, newX, family, obsWeights, gbm.trees = 1000, interaction.depth = 2, ...) 
+{
+    require("gbm")
+    gbm.model <- as.formula(paste("Y~", paste(colnames(X), collapse = "+")))
+    if (family$family == "gaussian") {
+        fit.gbm <- gbm::gbm(formula = gbm.model, data = X, distribution = "gaussian", 
+            n.trees = gbm.trees, interaction.depth = interaction.depth, 
+            cv.folds = 0, keep.data = TRUE, weights = obsWeights, 
+            verbose = FALSE)
+    }
+    if (family$family == "binomial") {
+        fit.gbm <- gbm::gbm(formula = gbm.model, data = X, distribution = "bernoulli", 
+            n.trees = gbm.trees, interaction.depth = interaction.depth, 
+            cv.folds = 0, keep.data = TRUE, verbose = FALSE, 
+            weights = obsWeights)
+    }
+    best.iter <- gbm.perf(fit.gbm, method = "OOB", plot.it = FALSE)
+    pred <- predict(fit.gbm, newdata = newX, best.iter, type = "response")
+    fit <- list(object = fit.gbm, n.trees = best.iter)
+    out <- list(pred = pred, fit = fit)
+    class(out$fit) <- c("SL.gbm")
+    return(out)
+}
