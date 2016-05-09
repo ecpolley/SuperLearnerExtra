@@ -1,0 +1,27 @@
+SL.ranger <- function (Y, X, newX, family, num.trees = 500, mtry = floor(sqrt(ncol(X))), write.forest = TRUE, min.node.size = ifelse(family$family == "gaussian", 5, 1),...) {
+	# need write.forest = TRUE for predict method
+	require("ranger")
+    if (family$family == "gaussian") {
+		fit <- ranger(Y ~ ., data = X, num.trees = num.trees, mtry = mtry, min.node.size = min.node.size, write.forest = write.forest)
+    }
+    if (family$family == "binomial") {
+		fit <- ranger(Y ~ ., data = X, num.trees = num.trees, mtry = mtry, min.node.size = min.node.size, write.forest = write.forest)
+    }
+    pred <- predict(fit, data = newX)$predictions
+    fit <- list(object = fit)
+    class(fit) <- c("SL.ranger")
+    out <- list(pred = pred, fit = fit)
+    return(out)
+}
+
+predict.SL.ranger <- function (object, newdata, family, ...) 
+{
+    require("ranger")
+    if (family$family == "gaussian") {
+        pred <- predict(object$object, data = newdata, verbose = FALSE)$predictions
+    }
+    if (family$family == "binomial") {
+        pred <- predict(object$object, data = newdata, verbose = FALSE)$predictions
+    }
+    pred
+}
