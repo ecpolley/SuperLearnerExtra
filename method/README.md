@@ -262,3 +262,5 @@ To compute the new super learner, it suffices to append the stratification algor
 #> SL.polymars_All     1.347726 0.4374546 0.30428567
 #> SL.mean_All         4.361759 0.0000000 0.00000000
 ```
+
+The stratum-specific weights differ starkly.
