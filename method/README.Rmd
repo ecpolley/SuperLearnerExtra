@@ -129,4 +129,5 @@ algorithm to  the library previously  defined, and to  request the use  of the
                                  verbose = TRUE,
                                  method = method.stratif.NNLS))
 ```
+The stratum-specific weights differ starkly.
 
