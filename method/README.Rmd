@@ -1,0 +1,132 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
+# Demonstrating the use of the 'method.stratifiedNNLS' Super Learner method
+
+
+> A new  method to  estimate the  coefficients for the  super learner  and the
+> model  to combine  the  individual  algorithms. A  single  algorithm in  the
+> library  ('SL.stratify' in  the example  below) is  used to  data adaptively
+> identify subgroups  in the observed  data. The other library  algorithms are
+> fit with the  full training data, but  the weights can vary  by subgroup. So
+> this   differs  from   the  [subsemble](https://github.com/ledell/subsemble)
+> method in  that an overall  predictor is fit and  the weights can  change by
+> subgroup, whereas subsemble estimates subset specific predictors.
+
+__Authors:__  Geoffrey Ecoto,  [Antoine Chambaz](https://github.com/achambaz),
+[Eric Polley](https://github.com/ecpolley)
+
+
+## Installation
+
+Copy                                                                       the
+[method.stratifiedNNLS.R](https://github.com/ecpolley/SuperLearnerExtra/method/method.stratifiedNNLS.R) 
+file                                  from                                 the
+[SuperLearnerExtra](https://github.com/ecpolley/SuperLearnerExtra)
+repository. Source the file into `R`.
+
+## Example
+
+The code  builds upon  `?SuperLearner`.  We  first load  the namespace  of the
+package with  name `SuperLearner` package, attach  it on the search  list, and
+source the file into `R`. Then, we simulate a training set and a test set.
+
+```{r}
+library(SuperLearner)
+source("https://raw.githubusercontent.com/ecpolley/SuperLearnerExtra/master/method/method.stratifiedNNLS.R")
+set.seed(23432)
+
+## training set
+n <- 500
+p <- 50
+X <- matrix(rnorm(n*p), nrow = n, ncol = p)
+colnames(X) <- paste("X", 1:p, sep="")
+X <- data.frame(X)
+Y <- X[, 1] + sqrt(abs(X[, 2] * X[, 3])) + X[, 2] - X[, 3] + rnorm(n)
+
+## test set
+m <- 1000
+newX <- matrix(rnorm(m*p), nrow = m, ncol = p)
+colnames(newX) <- paste("X", 1:p, sep = "")
+newX <- data.frame(newX)
+newY <- newX[, 1] + sqrt(abs(newX[, 2] * newX[, 3])) + newX[, 2] -
+  newX[, 3] + rnorm(m)
+```
+
+We  define a  library of  algorithms and  run the  super learner  algorithm to
+obtain a meta-algorithm that performs almost  as well as the best algorithm in
+the library. We rely on the `method.NNLS` method to determine the coefficients
+for the super learner and the model to combine the individual algorithms.
+
+```{r}
+## generate library and run Super Learner
+SL.library <- c("SL.glm", "SL.randomForest", "SL.gam",
+                "SL.polymars", "SL.mean")
+(test <- SuperLearner(Y = Y, X = X, newX = newX, SL.library = SL.library,
+                      verbose = TRUE, method = "method.NNLS"))
+```
+
+We  would like  that the  coefficients  for the  super learner  can differ  by
+subgroup. The subgroups  are characterized by a  stratification algorithm that
+is encoded just  like any other algorithm in the  library, see the `functions`
+`SL.stratify`  and `predict.SL.stratify`  below (and  note that  both **must**
+output `integer`s). Then,  the new `method` is obtained through  a call to the
+`method.stratifiedNNLS` `function`.
+
+```{r}
+## CAUTION: 'SL.stratify' and 'predict.SL.stratify' MUST output integers
+
+SL.stratify <- function(Y, X, newX, family, obsWeights, id, ...) {
+  if (!is.matrix(X)) {
+    X <- as.matrix(X)
+  }
+  X <- sign(X[, 2] * X[, 3])
+  
+  if (!is.matrix(newX)) {
+    newX <- as.matrix(newX)
+  }
+  pred <- as.integer(sign(newX[, 2] * newX[, 3]))
+  fit <- list(object = X)
+  out <- list(pred = pred, fit = fit)
+  class(out$fit) <- "SL.statify"
+  return(out)
+}
+environment(SL.stratify) <- asNamespace("SuperLearner")
+
+
+predict.SL.stratify <- function (object, newdata, family, X = NULL, Y = NULL, ...) {
+  if (!is.matrix(newdata)) {
+    newdata <- as.matrix(newdata)
+  }
+  pred <- as.integer(sign(newdata[, 2] * newdata[, 3]))
+  return(pred)
+}
+environment(predict.SL.stratify) <- asNamespace("SuperLearner")
+
+method.stratif.NNLS <- method.stratifiedNNLS("SL.stratify")
+environment(method.stratif.NNLS) <- asNamespace("SuperLearner")
+```
+
+To compute  the new super  learner, it  suffices to append  the stratification
+algorithm to  the library previously  defined, and to  request the use  of the
+`method.stratif.NNLS` method.
+
+```{r}
+
+(test.stratified <- SuperLearner(Y = Y, X = X, newX = newX,
+                                 SL.library = c(SL.library, "SL.stratify"),
+                                 verbose = TRUE,
+                                 method = method.stratif.NNLS))
+```
+
