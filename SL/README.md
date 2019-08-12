@@ -30,6 +30,10 @@ This function can be used to generate a new file with the template `SL.*` inform
 
 This function implements the `bart` function from the `BayesTree` package (no longer on CRAN)
 
+## `SL.dbart` ##
+
+The function implements the `bart` function from the `dbarts` package (no longer on CRAN) 
+
 ## `SL.blackboost` ##
 
 This function implements the `blackboost` function from the `mboost` package.
