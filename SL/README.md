@@ -42,6 +42,10 @@ This function implements the `blackboost` function from the `mboost` package.
 
 This function implements the `DSA` algorithm from the `DSA` package available at [http://www.stat.berkeley.edu/~laan/Software/index.html](http://www.stat.berkeley.edu/~laan/Software/index.html).
 
+## `SL.flam` ##
+
+This function implements the `flam` (Fused Lasso Additive Model) algorithm by Petesen, Witten, and Simon.
+
 ## `SL.leekasso` ##
 
 This function implements the `Leekasso`.
