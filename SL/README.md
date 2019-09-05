@@ -46,6 +46,10 @@ This function implements the `DSA` algorithm from the `DSA` package available at
 
 This function implements the `flam` (Fused Lasso Additive Model) algorithm by Petesen, Witten, and Simon.
 
+## `SL.leaps` ##
+
+Includes functions for `regsubsets` function in the `leaps` package.
+
 ## `SL.leekasso` ##
 
 This function implements the `Leekasso`.
