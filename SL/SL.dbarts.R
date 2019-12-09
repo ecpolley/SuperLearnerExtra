@@ -166,7 +166,7 @@ SL.dbarts = function(Y, X, newX, family, obsWeights, id,
 #' @export
 predict.SL.dbarts = function(object, newdata, family, ...) {
 
-  .SL.require("dbarts")
+  require("dbarts")
 
   # TODO: have to refit data, or just stop().
 
