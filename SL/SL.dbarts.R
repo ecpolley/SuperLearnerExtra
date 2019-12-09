@@ -110,7 +110,7 @@ SL.dbarts = function(Y, X, newX, family, obsWeights, id,
                      verbose = FALSE,
                      ...) {
 
-  .SL.require("dbarts")
+  require("dbarts")
 
   model =
     dbarts::bart(x.train = X,
