@@ -1,0 +1,28 @@
+# TODO: add additional parameter options
+SL.catboost <- function (Y, X, newX, family, ...)
+   {
+ 
+   require("catboost")
+  
+   if (family$family == "gaussian") {
+     train_pool = catboost.load_pool(data=X, label=Y)
+ params <- list(iterations=50,
+                learning_rate=0.1)
+                
+ fit <- catboost.train(train_pool, params=params)
+   }
+ 
+   if (family$family == "binomial") { 
+   	train_pool = catboost.load_pool(data=X, label=Y)
+   	 params <- list(iterations=50,
+                learning_rate=0.1)
+     fit <- catboost.train(train_pool, params)
+   }
+ 
+   test_pool = catboost.load_pool(data=newX, label=NULL)
+   preds <- catboost.predict(fit, pool = test_pool)
+   fit <- list(object = fit)
+   class(fit) <- c("SL.catboost")
+   out <- list(pred = preds, fit = fit)
+   return(out)
+ }
